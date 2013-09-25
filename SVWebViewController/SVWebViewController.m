@@ -7,7 +7,7 @@
 //  https://github.com/samvermette/SVWebViewController
 
 #import "SVWebViewController.h"
-
+#define IS_APP_RUNNING_ON_IOS7_AND_GREATER [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0
 @interface SVWebViewController () <UIWebViewDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, strong, readonly) UIBarButtonItem *backBarButtonItem;
@@ -168,6 +168,16 @@
     NSAssert(self.navigationController, @"SVWebViewController needs to be contained in a UINavigationController. If you are presenting SVWebViewController modally, use SVModalWebViewController instead.");
     
 	[super viewWillAppear:animated];
+    
+    if (IS_APP_RUNNING_ON_IOS7_AND_GREATER) {
+        self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:133.0f/255.0f green:0.0f/255.0f blue:118.0f/255.0f alpha:1];
+       self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:UITextAttributeTextColor];
+        self.navigationController.navigationBar.translucent = NO;
+        self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    }else {
+       
+    }
+    
 	self.navigationController.navigationBarHidden=NO;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         [self.navigationController setToolbarHidden:NO animated:animated];
@@ -246,7 +256,7 @@
         
         UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, toolbarWidth, 44.0f)];
         toolbar.items = items;
-				toolbar.barStyle = self.navigationController.navigationBar.barStyle;
+        toolbar.barStyle = self.navigationController.navigationBar.barStyle;
         toolbar.tintColor = self.navigationController.navigationBar.tintColor;
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:toolbar];
     } 
@@ -278,8 +288,12 @@
                      nil];
         }
         
-				self.navigationController.toolbar.barStyle = self.navigationController.navigationBar.barStyle;
-				self.navigationController.toolbar.tintColor = self.navigationController.navigationBar.tintColor;
+        self.navigationController.toolbar.barStyle = self.navigationController.navigationBar.barStyle;
+        self.navigationController.toolbar.tintColor = self.navigationController.navigationBar.tintColor;
+        if (IS_APP_RUNNING_ON_IOS7_AND_GREATER) {
+            self.navigationController.toolbar.barTintColor=[UIColor colorWithRed:133.0f/255.0f green:0.0f/255.0f blue:118.0f/255.0f alpha:1];
+            self.navigationController.toolbar.translucent = NO;
+        }
         self.toolbarItems = items;
     }
 }
