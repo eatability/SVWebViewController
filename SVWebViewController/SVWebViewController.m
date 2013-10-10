@@ -170,6 +170,7 @@
 	[super viewWillAppear:animated];
     
     if (IS_APP_RUNNING_ON_IOS7_AND_GREATER) {
+          self.navigationController.navigationBar.frame=CGRectMake(0, 20.0f, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height);
         self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:133.0f/255.0f green:0.0f/255.0f blue:118.0f/255.0f alpha:1];
        self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:UITextAttributeTextColor];
         self.navigationController.navigationBar.translucent = NO;
